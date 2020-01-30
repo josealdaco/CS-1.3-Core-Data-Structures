@@ -17,6 +17,36 @@ def decode(digits, base):
     return: int -- integer representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
+
+    if base == 2:
+        amount = len(digits) - 1
+        result = 0
+        for value in digits:
+            if value == "1":
+                result += 2 ** amount
+            amount -= 1
+        return result
+    elif base == 10:
+        return int(digits)
+    elif base == 16:
+        amount = len(digits) - 1
+        dict_Letters = {"a": 10, "b": 11, "c": 12, "d": 13, "e": 14, "f": 15}
+        result = 0
+        for value in digits:
+            if value in dict_Letters:
+                result += (16 ** amount) * dict_Letters[value]
+            else:
+                result += (16 ** amount) * int(value)
+            amount -= 1
+        return result
+
+    else:
+        amount = 0
+        result = 0
+        for value in range(1, len(digits) + 1):
+            result += int(digits[len(digits) - value]) * (base ** amount)
+            amount += 1
+        return result
     # TODO: Decode digits from binary (base 2)
     # ...
     # TODO: Decode digits from hexadecimal (base 16)
@@ -35,7 +65,11 @@ def encode(number, base):
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
     # TODO: Encode number in binary (base 2)
-    # ...
+    result = ""
+    while number > 0:
+        number, rem = divmod(number, base)
+        result += string.printable[rem]
+    return result[::-1]
     # TODO: Encode number in hexadecimal (base 16)
     # ...
     # TODO: Encode number in any base (2 up to 36)
@@ -53,6 +87,7 @@ def convert(digits, base1, base2):
     assert 2 <= base2 <= 36, 'base2 is out of range: {}'.format(base2)
     # TODO: Convert digits from base 2 to base 16 (and vice versa)
     # ...
+    return encode(decode(digits, base1), base2)
     # TODO: Convert digits from base 2 to base 10 (and vice versa)
     # ...
     # TODO: Convert digits from base 10 to base 16 (and vice versa)
