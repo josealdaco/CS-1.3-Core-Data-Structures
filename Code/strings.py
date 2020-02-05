@@ -1,10 +1,15 @@
 #!python
 
+
 def contains(text, pattern):
     """Return a boolean indicating whether pattern occurs in text."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement contains here (iteratively and/or recursively)
+    if find_index(text, pattern) is not None:
+        return True
+    else:
+        return False
 
 
 def find_index(text, pattern):
@@ -13,6 +18,26 @@ def find_index(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_index here (iteratively and/or recursively)
+    # text = text.translate({ord(i): None for i in "' '!@#$%^&*()?,.-_"}).lower()
+    # pattern = pattern.translate({ord(i): None for i in "' '!@#$%^&*()?,.-_"}).lower()
+    for index, char in enumerate(text.lower()):
+        """ Make sure all letters are lowered """ #  textcatNone
+        if pattern == '':
+            print("This is for the abs space test")
+            return index
+        elif char == pattern[0]:  # If the letter matches the first letter in text
+            if pattern[len(pattern) - 1] == text[(index + len(pattern)-1)]:
+                """ If first letter matches and last"""
+                text_index = 0
+                breaker = False
+                for index2 in range(index, (index + len(pattern)-1)):
+                    if text[index2] != pattern[text_index]:
+                        breaker = True
+                        break
+                    text_index += 1
+                if breaker is False:
+                    return index
+    return None
 
 
 def find_all_indexes(text, pattern):
@@ -21,6 +46,38 @@ def find_all_indexes(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_all_indexes here (iteratively and/or recursively)
+    """ Just make the function above recursive """
+    result = []
+    start = 0
+    index = 0
+    counter = 0
+    while True:
+        print("Inside While loop", text[start:], "Start:", start, "Pattern:", pattern)
+        state = find_index(text[start:], pattern)
+        if state is not None:
+            print("This is state:", state, "index", index)
+            if state in result:
+                print("State is already inside list")
+                result.append(result[index] + 1)
+                index += 1
+            else:
+                result.append(state)
+        else:
+            print("State is None")
+            break
+        if not pattern or state == 0:
+            start += state + 1
+            print("Adding the start:", start)
+        else:
+            start = state + len(pattern)
+        if start >= len(text) - 1:
+            print("We are breaking because start is too much")
+            break
+        if counter > 6:
+            print("Breaking because of counter")
+            break
+        counter += 1
+    return result
 
 
 def test_string_algorithms(text, pattern):

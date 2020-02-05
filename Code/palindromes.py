@@ -13,20 +13,47 @@ def is_palindrome(text):
     # implement is_palindrome_iterative and is_palindrome_recursive below, then
     # change this to call your implementation to verify it passes all tests
     assert isinstance(text, str), 'input is not a string: {}'.format(text)
-    return is_palindrome_iterative(text)
-    # return is_palindrome_recursive(text)
+    # return is_palindrome_iterative(text)
+    return is_palindrome_recursive(text)
 
 
-def is_palindrome_iterative(text):
+def is_palindrome_iterative(text):   # tacocat
     # TODO: implement the is_palindrome function iteratively here
-    pass
+    local_Word = text.translate({ord(i): None for i in "' '!@#$%^&*()?,.-_"})
+    start = 0
+    end = len(local_Word) - 1
+    if not local_Word:
+        """  In case the string is empty"""
+        return True
+    while True:
+        if local_Word[start].lower() == local_Word[end].lower() and start != len(local_Word)-1 and end != 0:
+            start += 1
+            end -= 1
+        elif local_Word[start].lower() == local_Word[end].lower() and start == len(local_Word)-1 and end == 0:
+            return True
+        else:
+            return False
     # once implemented, change is_palindrome to call is_palindrome_iterative
     # to verify that your iterative implementation passes all tests
 
 
-def is_palindrome_recursive(text, left=None, right=None):
+def is_palindrome_recursive(text, start=0, end=None):
     # TODO: implement the is_palindrome function recursively here
-    pass
+    if not text:
+        """  In case the string is empty"""
+        return True
+    if end is None:
+        text = text.translate({ord(i): None for i in "' '!@#$%^&*()?,.-_"})
+        end = len(text) - 1
+    if text[start].lower() == text[end].lower():
+        if start < len(text)-1 and end > 0:
+            start += 1
+            end -= 1
+            return is_palindrome_recursive(text, start, end)
+        elif start == len(text)-1 and end == 0:
+            return True
+    else:
+        return False
     # once implemented, change is_palindrome to call is_palindrome_recursive
     # to verify that your iterative implementation passes all tests
 
