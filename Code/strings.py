@@ -25,7 +25,9 @@ def find_index(text, pattern):
         if pattern == '':
             print("This is for the abs space test")
             return index
-        elif char == pattern[0]:  # If the letter matches the first letter in text
+        elif len(pattern) > len(text):
+            return None
+        elif char == pattern[0]:  # If the letter matches the first letter in text  catabccat
             if pattern[len(pattern) - 1] == text[(index + len(pattern)-1)]:
                 """ If first letter matches and last"""
                 text_index = 0
@@ -50,33 +52,27 @@ def find_all_indexes(text, pattern):
     result = []
     start = 0
     index = 0
-    counter = 0
     while True:
-        print("Inside While loop", text[start:], "Start:", start, "Pattern:", pattern)
         state = find_index(text[start:], pattern)
         if state is not None:
-            print("This is state:", state, "index", index)
             if state in result:
-                print("State is already inside list")
-                result.append(result[index] + 1)
-                index += 1
+                if not pattern:
+                    result.append(result[index] + 1)
+                    index += 1
+                else:
+                    result.append(start)
+            elif state != 0:
+                result.append(state+start)
             else:
-                result.append(state)
+                result.append(start)
         else:
-            print("State is None")
             break
-        if not pattern or state == 0:
+        if not pattern or pattern == text[len(pattern)-1:]:
             start += state + 1
-            print("Adding the start:", start)
         else:
-            start = state + len(pattern)
-        if start >= len(text) - 1:
-            print("We are breaking because start is too much")
+            start += state + len(pattern)
+        if start >= len(text):
             break
-        if counter > 6:
-            print("Breaking because of counter")
-            break
-        counter += 1
     return result
 
 
