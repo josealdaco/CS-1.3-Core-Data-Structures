@@ -119,5 +119,29 @@ class StringsTest(unittest.TestCase):
         # ...
 
 
+class ComplexStringTest(unittest.TestCase):
+    def test_contains_with_complex(self):
+        assert contains('lkasjdlsak', 'l') is True
+        assert contains('2', '') is True
+        assert contains('12', '') is True
+        assert contains('$$$', '!') is False
+        assert contains(';', '0') is False
+        assert contains('kome', 'love') is False
+        assert contains('Japan', 'n') is True
+
+    def test_find_index_with_complex(self):
+        assert find_index('jose', 'ose') == 1
+        assert find_index('lake', 'cake') is None
+        assert find_index('lamp', 'am') == 1
+        assert find_index('thisisaverylongsentencestructurelong', 'long') == 11
+
+    def test_find_all_indexes_with_complex(self):
+        assert find_all_indexes('repeatnothingrepeat', 'repeat') == [0, 13]
+        assert find_all_indexes('rlovecaser', 'r') == [0, 9]
+        assert find_all_indexes('rampcampnone', 'a') == [1, 5]
+        assert find_all_indexes('abccbd', 'repeat') == []
+        assert find_all_indexes('finalisNone', 'repeat') == []
+
+
 if __name__ == '__main__':
     unittest.main()

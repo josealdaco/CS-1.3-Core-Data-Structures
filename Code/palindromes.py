@@ -19,6 +19,8 @@ def is_palindrome(text):
 
 def is_palindrome_iterative(text):   # tacocat
     # TODO: implement the is_palindrome function iteratively here
+
+    # Space Complexity is O(n)
     local_Word = text.translate({ord(i): None for i in "' '!@#$%^&*()?,.-_"})
     start = 0
     end = len(local_Word) - 1
@@ -39,6 +41,7 @@ def is_palindrome_iterative(text):   # tacocat
 
 def is_palindrome_recursive(text, start=0, end=None):
     # TODO: implement the is_palindrome function recursively here
+    # Space Complexity is O(n)
     if not text:
         """  In case the string is empty"""
         return True

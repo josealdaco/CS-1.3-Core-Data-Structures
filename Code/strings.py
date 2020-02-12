@@ -6,6 +6,7 @@ def contains(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement contains here (iteratively and/or recursively)
+    #  Time Complexity is 0(n * p)
     if find_index(text, pattern) is not None:
         return True
     else:
@@ -13,13 +14,12 @@ def contains(text, pattern):
 
 
 def find_index(text, pattern):
+    #  Time Complexity is 0(n * p)
     """Return the starting index of the first occurrence of pattern in text,
     or None if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_index here (iteratively and/or recursively)
-    # text = text.translate({ord(i): None for i in "' '!@#$%^&*()?,.-_"}).lower()
-    # pattern = pattern.translate({ord(i): None for i in "' '!@#$%^&*()?,.-_"}).lower()
     for index, char in enumerate(text.lower()):
         """ Make sure all letters are lowered """ #  textcatNone
         if pattern == '':
@@ -48,6 +48,7 @@ def find_all_indexes(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_all_indexes here (iteratively and/or recursively)
+    #  Time Complexity is 0(n * p)
     """ Just make the function above recursive """
     result = []
     start = 0
