@@ -27,7 +27,7 @@ class HashTable(object):
         """Return the load factor, the ratio of number of entries to buckets.
         Best and worst case running time: ??? under what conditions? [TODO]"""
         # TODO: Calculate load factor
-        # return ...
+        return len(self.items()) / len(self.buckets)
 
     def keys(self):
         """Return a list of all keys in this hash table.
@@ -107,12 +107,19 @@ class HashTable(object):
         # Find the entry with the given key in that bucket, if one exists
         # Check if an entry with the given key exists in that bucket
         entry = bucket.find(lambda key_value: key_value[0] == key)
-        if entry is not None:  # Found
+        if entry is not None:
+            self.size -= 1  # Found
             # In this case, the given key's value is being updated
             # Remove the old key-value entry from the bucket first
             bucket.delete(entry)
         # Insert the new key-value entry into the bucket in either case
         bucket.append((key, value))
+
+        load_factor = self.load_factor()
+        self.size += 1
+        if load_factor > 0.75:
+            self.size = 0
+            self._resize()
         # TODO: Check if the load factor exceeds a threshold such as 0.75
         # ...
         # TODO: If so, automatically resize to reduce the load factor
@@ -130,6 +137,7 @@ class HashTable(object):
         if entry is not None:  # Found
             # Remove the key-value entry from the bucket
             bucket.delete(entry)
+            self.size -= 1
         else:  # Not found
             raise KeyError('Key not found: {}'.format(key))
 
@@ -142,8 +150,13 @@ class HashTable(object):
         # If unspecified, choose new size dynamically based on current size
         if new_size is None:
             new_size = len(self.buckets) * 2  # Double size
-        # Option to reduce size if buckets are sparsely filled (low load factor)
-        elif new_size is 0:
+            temporary_list = self.items()
+            self.buckets = [LinkedList() for i in range(new_size)]
+            for item in temporary_list:
+                self.set(item[0], item[1])
+
+            # Option to reduce size if buckets are sparsely filled (low load factor)
+        elif new_size == 0:
             new_size = len(self.buckets) / 2  # Half size
         # TODO: Get a list to temporarily hold all current key-value entries
         # ...
