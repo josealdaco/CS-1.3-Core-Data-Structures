@@ -1,4 +1,5 @@
 #!python
+from binarytree import *
 
 
 def is_sorted(items):

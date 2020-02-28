@@ -7,6 +7,7 @@ def contains(text, pattern):
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement contains here (iteratively and/or recursively)
     #  Time Complexity is 0(n * p)
+    # Space Complexity is O(1)
     if find_index(text, pattern) is not None:
         return True
     else:
@@ -15,6 +16,7 @@ def contains(text, pattern):
 
 def find_index(text, pattern):
     #  Time Complexity is 0(n * p)
+    # Space Complexity is O(1)
     """Return the starting index of the first occurrence of pattern in text,
     or None if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
@@ -48,7 +50,9 @@ def find_all_indexes(text, pattern):
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_all_indexes here (iteratively and/or recursively)
-    #  Time Complexity is 0(n * p)
+    # Best is O(n * p)
+    #  Worst Time Complexity is 0((n * p) * j) j being the outer loop
+    #  Space Complexity is
     """ Just make the function above recursive """
     result = []
     start = 0
