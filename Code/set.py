@@ -27,8 +27,7 @@ class Set(object):
     def contains(self, element):
         if element in self.list.items():
             return True
-        else:
-            return False
+        return False
 
     def remove(self, item):
         try:
@@ -46,7 +45,7 @@ class Set(object):
     def intersection(self, other_set):
         data = []
         for item in other_set.list.items():
-            if self.contains(item) is True:
+            if self.contains(item):
                 data.append(item)
         return Set(data)
 
@@ -59,7 +58,7 @@ class Set(object):
 
     def is_subset(self, other_set):
         for item in other_set.list.items():
-            if self.contains(item) is not True:
+            if not self.contains(item):
                 return False
         return True
 
