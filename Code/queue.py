@@ -51,7 +51,7 @@ class LinkedQueue(object):
         # TODO: Remove and return front item, if any
         front_value = self.list.head
         try:
-            self.list.head = self.list.head.next
+            self.delete(front_value)
             front_value.next = None
         except Exception:
             raise ValueError("Queue is empty")

@@ -8,7 +8,7 @@ class Jumble():
         self.counter = 0
         self.groups = set()
         self.phrase = ""
-        
+
         for word in self.four_words:
             word = "".join(sorted(word))
             self.sorted_four_words.append(word)
@@ -17,10 +17,10 @@ class Jumble():
                 word = line.strip().split()[0] # eht
                 if "".join(sorted(word)) in self.sorted_four_words:
                     self.actual_words.append(word)
-    
+        self.actual_words.remove("urlar")  # Manually delete urlar from chosen words
+
     def arrange_words(self):
         new_actual_words = []
-        
         for w in self.sorted_four_words:
             for inner_w in self.actual_words:
                 if sorted(w) == sorted(inner_w):
@@ -29,10 +29,11 @@ class Jumble():
         return new_actual_words
 
     def get_word_bank(self):
-        first_bank = [2,4,0,1,3,4,3,4]
+        first_bank = [1, 2, 3, 0, 2, 0, 1, 2, 4, 5]
         first_bank_table = {}
-        circles_list = [2,3,1,2]
-        circle_counter = 0 
+        circles_list = [3, 2, 2, 3]
+        circle_counter = 0
+        print("len:", len(self.arrange_words()))
         for w in self.arrange_words():
             first_bank_table[w] = circles_list[circle_counter]
             circle_counter += 1
@@ -46,16 +47,16 @@ class Jumble():
                 first_bank.pop(0)
         return first_bank_output
 
-    # stretch challenge attempted :'( 
+    # stretch challenge attempted :'(
     # def get_phrase(self):
     #     self.phrase = "".join(self.get_word_bank())
     #     self.__init__(self.path_file, [self.phrase])
     #     return self.actual_words
-                
+
 
 if __name__ == "__main__":
     path = "words.txt"
-    puzzle_one = ["tefon", "sokik", "niumem", "siconu"]
+    puzzle_one = ["laisa", "laurr", "bureek", "prouot"]
     jumble_one = Jumble(path, puzzle_one)
     jumble_one.get_word_bank()
     print("SOLUTION WORDS")

@@ -2,6 +2,18 @@
 from collections import deque
 
 
+class User(object):
+    def __init__(self, age, testscore):
+        self.age = age
+        self.testscore = testscore
+
+    def getAge(self):
+        return self.age
+
+    def getTestScore(self):
+        return self.testscore
+
+
 class BinaryTreeNode(object):
 
     def __init__(self, data):
@@ -128,9 +140,6 @@ class BinarySearchTree(object):
         return None
 
     def insert(self, item):
-        """Insert the given item in order into this binary search tree.
-        TODO: Best case running time: ??? under what conditions?
-        TODO: Worst case running time: ??? under what conditions?"""
         #  Best Case  running Time O(1) if parent is None/Root
         #  Worst Case Running Time O(n) If have to search through each node in parent_node method
         # Handle the case where the tree is empty
@@ -142,10 +151,6 @@ class BinarySearchTree(object):
             return
         # Find the parent node of where the given item should be inserted
         parent = self._find_parent_node_recursive(item, self.root)
-        if parent is None:
-            """ Inserting to root"""
-            pass
-
         if parent.is_branch():
             if parent.left is not None:
                 parent.right = BinaryTreeNode(item)
@@ -156,7 +161,6 @@ class BinarySearchTree(object):
                 parent.right = BinaryTreeNode(item)
             else:
                 parent.left = BinaryTreeNode(item)
-
         self.size += 1
         return
 
@@ -456,5 +460,14 @@ def test_binary_search_tree():
     print('items level-order: {}'.format(tree.items_level_order()))
 
 
+def articleExample():
+    userTree = BinarySearchTree()  # Empty tree
+    users = [User(18, 0), User(12, 34), User(13, 24), User(50, 100), User(34, 4), User(20, 90)]  # List of users
+    for user in users:
+        userTree.insert(user.age)
+    return userTree.items_in_order()
+
+
 if __name__ == '__main__':
-    test_binary_search_tree()
+    # test_binary_search_tree()
+    print(articleExample())

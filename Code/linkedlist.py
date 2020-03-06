@@ -95,50 +95,25 @@ class LinkedList(object):
         Best case running time: ??? under what conditions? [TODO]
         Worst case running time: ??? under what conditions? [TODO]"""
         # Check if the given index is out of range and if so raise an error
-        if not (0 <= index <= self.size):
-            raise ValueError('List index out of range: {}'.format(index))
-        start = self.head
-        previous = None
-        start_index = 0
-        print("This is all the items so far", self.items())
-        if index == 0:
-            if self.head is None:
-                self.head = Node(item)
-                self.tail = self.head
-                self.size += 1
-                return
-            elif self.head.data == self.tail.data:
-                self.head = Node(item)
-                self.head.next = start
-                print("Head should be B", start.next)
-                print("head", self.head, "tail", self.tail, "next:", self.head.next)
-                self.size += 1
-                return
-            else:
-                self.head = Node(item)
-                self.head.next = start
-                self.size += 1
-                return
-        while True:
-            if start_index == index:
-                previous.next = Node(item)
-                previos = previous.next
-                previos.next = start
-                self.size += 1
-                print("Error here")
-                return
-            elif start.next is None:
-                """ Appending to the last Item"""
-                print("Appending to last Item")
-                print("This is the result for appending alst:", start.next, self.tail, start, self.head.next)
-                start.next = Node(item)
-                self.tail = start.next
-                self.size += 1
-                return
-            start_index += 1
-            previous = start
-            start = start.next
-        return None
+        if index > self.size or index < 0:
+            raise ValueError("Index out of range")
+        if self.size == 0:
+            return self.prepend(item)
+        node = self.head
+        appending_last = False
+        while index > 0:
+            if node.next is None:
+                appending_last = True
+                break
+            node = node.next
+            index -= 1
+        if appending_last is True:
+            self.append(item)
+            return
+        previous_data = node.data
+        self.replace(node.data, item)
+        self.append(previous_data)
+        return
         # TODO: Find the node before the given index and insert item after it
 
     def append(self, item):
@@ -202,7 +177,6 @@ class LinkedList(object):
         while start:
             if start.data == old_item:
                 start.data = new_item
-                print("New data", start.data)
                 return
             start = start.next
         raise ValueError("Not found")
